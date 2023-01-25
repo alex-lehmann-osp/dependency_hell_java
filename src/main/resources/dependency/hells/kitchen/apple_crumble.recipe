@@ -1,0 +1,13 @@
+* apples
+* butter
+* sugar
+* flour
+* cinnamon
+* lemon
+
+lemon_juice = press [lemon]
+apples_and_lemon = [apples] + [lemon_juice]
+dough = [butter] + [sugar] + [cinnamon]
+raw_crumble = [apples_and_lemon] + [dough]
+crumble = bake [raw_crumble]
+return crumble
