@@ -11,11 +11,17 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class ClassResourcesRecipeRepository implements RecipeRepository {
+
+    private final RecipeParser parser;
+
+    public ClassResourcesRecipeRepository(RecipeParser parser) {
+        this.parser = parser;
+    }
+
     @Override
     public Recipe getRecipe() {
         List<String> lines = readRecipe();
-        RecipeParser recipeParser = new RecipeParser();
-        Recipe recipe = recipeParser.parse(lines);
+        Recipe recipe = parser.parse(lines);
         return recipe;
     }
 

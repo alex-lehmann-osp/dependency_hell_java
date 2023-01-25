@@ -8,12 +8,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Cook {
-    KitchenTable kitchenTable = new KitchenTable();
+    private final KitchenTable kitchenTable;
+    private final Oven oven;
+    private final Fridge fridge;
+    private final Press press;
+
+    public Cook(KitchenTable kitchenTable, Oven oven, Fridge fridge, Press press) {
+        this.kitchenTable = kitchenTable;
+        this.oven = oven;
+        this.fridge = fridge;
+        this.press = press;
+    }
 
     public Ingredient prepareMeal(Recipe recipe) {
-        Fridge fridge = new MagicFridge();
-        Press press = new Press();
-
         // get initial ingredients
         for (String ingredientName : recipe.getIngredients()) {
             Ingredient ingredient = fridge.getIngredient(ingredientName);
@@ -25,7 +32,7 @@ public class Cook {
         for (Action action : recipe.getActions()) {
             switch (action.type()) {
                 case PRESS -> doAction(action, ingredient -> press.press(ingredient, action.leftOperand()));
-                case BAKE -> doAction(action, ingredient -> Oven.getInstance().bake(ingredient, action.leftOperand()));
+                case BAKE -> doAction(action, ingredient -> oven.bake(ingredient, action.leftOperand()));
                 case COMBINE -> doCombine(action);
                 default -> throw new RuntimeException("unknown action type " + action.type());
             }
